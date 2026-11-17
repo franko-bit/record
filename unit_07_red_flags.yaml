@@ -1,0 +1,94 @@
+records:
+  # --- General danger sign vocabulary ---
+  - "Igicuri"
+  - "Yataye ubwenge"
+  - "Ntashobora kunywa cyangwa konka"
+  - "Aruka byose"
+  - "Kubura umwuka bikaze"
+  - "Igituza kwinjira mu nda"
+  - "Umwuma ukaze"
+  - "Kuva amaraso menshi"
+  - "Ijosi ryumye"
+  - "Umuriro mwinshi"
+  - "Yeruye cyane"
+  - "Amaso yinjiye"
+  - "Uruhu rugaruka buhoro"
+  - "Ntashobora kurya"
+  - "Ari mu gicuri nonaha"
+  - "Kutamenya"
+  - "Ntashobora kunywa"
+
+  # --- Fill-in-blank complete sentences ---
+  - "Umurwayi afite igicuri."
+  - "Umurwayi yataye ubwenge."
+  - "Umurwayi aruka byose."
+  - "Umurwayi afite ijosi ryumye."
+  - "Umurwayi afite amaso yinjiye."
+
+  # --- Fill-in-blank answer options ---
+  - "ubwenge"
+  - "amaraso"
+  - "byose"
+  - "ibiryo"
+  - "ryumye"
+  - "ryiza"
+  - "ribi"
+  - "yinjiye"
+  - "manini"
+  - "matoya"
+
+  # --- Sentence scramble complete sentences ---
+  - "Umurwayi afite igicuri"
+  - "Umurwayi aruka byose"
+  - "Kubura umwuka bikaze ni ikimenyetso cy'akaga"
+  - "Kuva amaraso menshi ni ikimenyetso cy'akaga"
+  - "Ijosi ryumye ni ikimenyetso cy'akaga"
+
+  # --- Sentence scramble tiles ---
+  - "ni ikimenyetso"
+  - "cy'akaga"
+
+  # --- Reading passage texts ---
+  - "Umwana afite umuriro n'igicuri. Araniga."
+  - "Umurwayi araniga kandi ntashobora kunywa."
+  - "Umugore yabyara aruka amaraso menshi."
+  - "Umwana yataye ubwenge nyuma y'igicuri."
+  - "Umurwayi afite ijosi ryumye n'umuriro mwinshi."
+  - "Umwana aruka byose kandi afite amaso yinjiye."
+
+  # --- True/False statements ---
+  - "Igicuri ni ikimenyetso cy'akaga gikomeye."
+  - "Kubura guhumeka neza ni ikimenyetso cy'akaga."
+  - "Kuruka byose ni ikimenyetso cy'akaga."
+  - "Umutwe gusa ni ikimenyetso cy'akaga gikomeye."
+  - "Kuva amaraso menshi ni ikimenyetso cy'akaga."
+  - "Amaso yinjiye ni ikimenyetso cy'umwuma."
+  - "Ijosi ryumye ni ikimenyetso cy'akaga."
+  - "Umuriro mwinshi ni ikimenyetso cy'akaga."
+  - "Kunywa amazi ni ikimenyetso cy'akaga."
+  - "Kutamenya ni ikimenyetso cy'akaga."
+
+  # --- Conversation bot messages ---
+  - "Umwana afite igicuri."
+  - "Umurwayi araniga."
+  - "Umugore aruka amaraso menshi nyuma yo kubyara."
+  - "Umurwayi yataye ubwenge."
+
+  # --- Conversation response options ---
+  - "Ibi ni ibyihutirwa, twite ku mwana nonaha"
+  - "Ntacyo, tuzamurebe ejo"
+  - "Mureke anywe amazi"
+  - "Hamagara ubufasha, tangira gufasha umurwayi"
+  - "Mureke aryame"
+  - "Mumuhe ibiryo"
+  - "Ibi ni ibyihutirwa, tumuhe amaraso nonaha"
+  - "Mumuhe amazi"
+  - "Reba uko ahumeka, hamagara umuganga"
+  - "Mumuhe imiti"
+
+  # --- Story text ---
+  - "Umwana w'imyaka 2 yazanywe na nyina ku kigo nderabuzima."
+  - "Afite umuriro mwinshi n'igicuri."
+  - "Ntashobora kunywa kandi araniga iyo ahumeka."
+  - "Amaso ye yinjiye kandi umunwa we wumye."
+  - "Umuganga ahita amushyira mu butabazi bwihutirwa."

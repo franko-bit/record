@@ -1,0 +1,91 @@
+records:
+  # --- Complete dosage-instruction sentences ---
+  - "Fata ikinini kimwe buri masaha 8 iminsi 7"
+  - "Fata ibinini bibiri kabiri ku munsi nyuma yo kurya"
+  - "Fata ikinini kimwe rimwe ku munsi mbere yo kurya"
+  - "Fata ibinini bitatu gatatu ku munsi iminsi 10"
+  - "Fata ikinini kimwe mu gihe cyo kuryama ibyumweru 2"
+  - "Fata imiti nyuma yo kurya"
+  - "Fata ikinini kimwe mu gihe cyo kuryama"
+  - "Fata ibinini bibiri kabiri ku munsi"
+  - "Fata imiti iminsi 7"
+  - "Fata ikinini kimwe buri masaha 8"
+  - "Fata imiti mbere yo kurya"
+
+  # --- Word bank / scramble tiles ---
+  - "Fata"
+  - "ikinini"
+  - "kimwe"
+  - "buri masaha 8"
+  - "iminsi 7"
+  - "ibinini"
+  - "bibiri"
+  - "kabiri ku munsi"
+  - "nyuma yo kurya"
+  - "rimwe ku munsi"
+  - "mbere yo kurya"
+  - "bitatu"
+  - "gatatu ku munsi"
+  - "iminsi 10"
+  - "mu gihe cyo kuryama"
+  - "ibyumweru 2"
+  - "imiti"
+  - "nyuma"
+  - "yo kurya"
+  - "mbere"
+
+  # --- Fill-in-blank complete sentences ---
+  - "Fata ikinini kimwe buri masaha 8."
+  - "Fata ibinini bibiri kabiri ku munsi."
+  - "Fata imiti nyuma yo kurya."
+  - "Fata ikinini kimwe mu gihe cyo kuryama."
+  - "Fata imiti iminsi 7."
+
+  # --- Fill-in-blank / choose-missing answer options ---
+  - "8"
+  - "12"
+  - "24"
+  - "kabiri"
+  - "rimwe"
+  - "gatatu"
+  - "nyuma"
+  - "mbere"
+  - "hamwe"
+  - "kuryama"
+  - "kurya"
+  - "kunywa"
+  - "7"
+  - "2"
+  - "30"
+  - "bitatu"
+  - "bine"
+
+  # --- Reading passage text ---
+  - "Muganga yandikiye umurwayi imiti. Avuga ko anywa ibinini bibiri kabiri ku munsi nyuma yo kurya iminsi 7."
+
+  # --- True/False statements ---
+  - "Kabiri ku munsi bisobanura 'twice a day'."
+  - "Mbere yo kurya bisobanura 'before meals'."  # Corrected translation alignment
+  - "Iminsi 7 bisobanura 'for 7 days'."
+  - "Mu gihe cyo kuryama bisobanura 'at bedtime'." # Corrected translation alignment
+  - "Buri masaha 8 bisobanura 'every 8 hours'."     # Corrected translation alignment
+
+  # --- Conversation bot messages ---
+  - "Ngiye kunywa imiti gute?"
+  - "Ngiye kuyifata ryari?"
+  - "Mu gihe kingana iki?"
+  - "Ni ibinini bingahe?"
+
+  # --- Conversation response options ---
+  - "Nyuma yo kurya"
+  - "Iminsi 7"
+  - "Ibinini bibiri"
+
+  # --- Story text ---
+  - "Umuganga: Uyu muti ni wo uzanywe."
+  - "Umurwayi: Ngiye kuwunywa gute?"
+  - "Umuganga: Fata ibinini bibiri kabiri ku munsi."
+  - "Umurwayi: Nyuma cyangwa mbere yo kurya?"
+  - "Umuganga: Nyuma yo kurya."
+  - "Umurwayi: Mu gihe kingana iki?"
+  - "Umuganga: Iminsi 7."

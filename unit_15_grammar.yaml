@@ -1,0 +1,298 @@
+records:
+  # --- Noun class examples ---
+  - "Umurwayi"
+  - "Umutwe"
+  - "Umuriro"
+  - "Umugore"
+  - "Umwana"
+  - "Abarwayi"
+  - "Abana"
+  - "Abagore"
+  - "Abagabo"
+  - "Igituntu"
+  - "Igituza"
+  - "Igikomere"
+  - "Ikimenyetso"
+  - "Ibituntu"
+  - "Ibinini"
+  - "Ibisebe"
+  - "Ibimenyetso"
+  - "Inkorora"
+  - "Inda"
+  - "Iminsi"
+  - "Inzitiramubu"
+  - "Imiti"
+  - "Imbeba"
+  - "Impyiko"
+
+  # --- Noun class fill-in-blank complete sentences ---
+  - "Umurwayi umwe arwaye."
+  - "Abarwayi benshi barwaye."
+  - "Igituntu cyane kirakaze."
+  - "Ibituntu byinshi birakaze."
+  - "Umurwayi afite umutwe."
+  - "Abarwayi bafite umutwe."
+  - "Igituntu ni indwara."
+  - "Abarwayi benshi barwaye"
+  - "Igituntu kirakaze cyane"
+
+  # --- Noun class fill-in-blank answer options ---
+  - "umwe"
+  - "benshi"
+  - "gato"
+  - "cyane"
+  - "byinshi"
+  - "afite"
+  - "ifite"
+  - "bafite"
+  - "ni"
+  - "ari"
+  - "bari"
+
+  # --- Verb conjugation (Nfite) complete sentences ---
+  - "Nfite umutwe."
+  - "Ufite umutwe."
+  - "Afite umutwe."
+  - "Tufite umutwe."
+  - "Mufite umutwe."
+  - "Bafite umutwe."
+
+  # --- Verb conjugation (Nfite) answer options ---
+  - "fite"
+  - "fiti"
+  - "fita"
+  - "dufite"
+  - "mufite"
+
+  # --- Verb conjugation (Kunywa) complete sentences ---
+  - "Nnywa imiti."
+  - "Unywa imiti."
+  - "Anywa imiti."
+  - "Dunywa imiti."
+  - "Umurwayi anywa imiti."
+  - "Ndi kunywa imiti."
+
+  # --- Verb conjugation (Kunywa) answer options ---
+  - "nywa"
+  - "unywa"
+  - "anywa"
+  - "dunywa"
+  - "munywa"
+  - "banywa"
+  - "kunywa"
+  - "kurya"
+  - "kuryama"
+
+  # --- Verb conjugation sentences (scramble answers) ---
+  - "Nfite umutwe"
+  - "Umurwayi afite umuriro"
+  - "Umurwayi anywa imiti"
+
+  # --- Adjective agreement examples ---
+  - "Umurwayi mugufi"
+  - "Abarwayi bagufi"
+  - "Igituntu kinini"
+  - "Ibituntu binini"
+  - "Inkorora ikaze"
+  - "Inda ikaze"
+
+  # --- Adjective agreement complete sentences ---
+  - "Umurwayi mubi cyane."
+  - "Igituntu gikaze cyane."
+  - "Abarwayi benshi."
+  - "Ibituntu byinshi."
+  - "Abarwayi benshi barwaye"
+  - "Igituntu kirakaze cyane"
+
+  # --- Adjective agreement answer options ---
+  - "mubi"
+  - "mwiza"
+  - "gikaze"
+  - "gikomeye"
+  - "gito"
+  - "menshi"
+  - "byinshi"
+
+  # --- Negative form complete sentences ---
+  - "Sinfite umutwe."
+  - "Ntufite umuriro."
+  - "Ntafite inkorora."
+  - "Umurwayi ntafite umuriro."
+  - "Ndi nta mfite ububabare."
+  - "Umurwayi ntafite umuriro"
+
+  # --- Negative form answer options ---
+  - "sinfite"
+  - "ntafite"
+  - "ntufite"
+  - "yafite"
+  - "mfite"
+  - "nta mfite"
+
+  # --- Question formation complete sentences ---
+  - "Ufite umutwe?"
+  - "Afite umuriro?"
+  - "Ufite umutwe"
+
+  # --- Question formation answer options ---
+  - "Ufite"
+  - "Ntafite"
+  - "Yafite"
+
+  # --- Imperative complete sentences ---
+  - "Nywa imiti."
+  - "Fasha umurwayi."
+  - "Ryama ku giti."
+  - "Nywa imiti kabiri ku munsi."
+
+  # --- Imperative answer options ---
+  - "Nywa"
+  - "Nywe"
+  - "Nywaa"
+  - "Fasha"
+  - "Fashe"
+  - "Fashaa"
+  - "Ryama"
+  - "Ryame"
+  - "Ryamaa"
+  - "Kunywa"
+
+  # --- Past tense complete sentences ---
+  - "Yagize umutwe."
+  - "Nagize umuriro."
+  - "Umurwayi yagize umuriro."
+  - "Umurwayi yagize umuriro"
+
+  # --- Past tense answer options ---
+  - "agize"
+  - "yagize"
+  - "azagira"
+  - "nagize"
+  - "nzagira"
+
+  # --- Future tense complete sentences ---
+  - "Uzanywa imiti."
+  - "Azanywa imiti."
+  - "Umurwayi azanywa imiti."
+  - "Umurwayi azanywa imiti"
+
+  # --- Future tense answer options ---
+  - "zanywa"
+  - "uzanywa"
+  - "wanywe"
+  - "azanywa"
+  - "yanywe"
+
+  # --- Relative clauses complete sentences ---
+  - "Umurwayi urwaye."
+  - "Imiti iyatanzwe."
+  - "Umurwayi ufite umuriro."
+  - "Umurwayi ufite umuriro arwaye"
+
+  # --- Relative clauses answer options ---
+  - "uwo"
+  - "urwaye"
+  - "u"
+  - "iyatanzwe"
+  - "yatanzwe"
+  - "ya"
+  - "wa"
+
+  # --- Prepositions complete sentences ---
+  - "Ububabare mu nda."
+  - "Imiti nyuma yo kurya."
+  - "Kunywa imiti kabiri ku munsi."
+  - "Ububabare buri mu gituza."
+  - "Imiti nyuma yo kurya."
+  - "Ububabare buri mu nda"
+
+  # --- Prepositions answer options ---
+  - "mu"
+  - "ku"
+  - "kuri"
+  - "nyuma"
+  - "mbere"
+  - "hamwe"
+  - "kabiri ku"
+  - "rimwe"
+  - "gatatu"
+
+  # --- Conjunctions complete sentences ---
+  - "Ufite umuriro na inkorora."
+  - "Ufite umuriro ariko ntafite inkorora."
+  - "Ufite umuriro n'inkorora"
+
+  # --- Conjunctions answer options ---
+  - "na"
+  - "ariko"
+  - "cyangwa"
+
+  # --- Numbers complete sentences ---
+  - "Fata ibinini bibiri."
+  - "Iminsi 7."
+  - "Fata ibinini bibiri"
+
+  # --- Numbers answer options ---
+  - "bibiri"
+  - "bitatu"
+  - "bine"
+  - "7"
+  - "2"
+  - "30"
+
+  # --- Reading passage texts ---
+  - "Abarwayi benshi barwaye igituntu. Bafite inkorora n'ibyuya nijoro."
+  - "Umurwayi anywa imiti kabiri ku munsi. Azakomeza imiti amezi 6."
+
+  # --- True/False statements ---
+  - "Nfite bisobanura 'I have'."
+  - "Afite bisobanura 'they have'."
+  - "Ntafite umutwe bisobanura ko nta mutwe mfite."
+  - "Kuzamura ijwi bihindura interuro ikibazo."
+  - "Nywa imiti ni itegeko."
+  - "Yagize bisobanura ikibaye mu gihe cyashize."
+  - "Azanywa bisobanura icyo azakora mu gihe kizaza."
+  - "Interuro zihuzwa zisobanura ijambo ry'ina."
+  - "Mu bisobanura 'in'."
+  - "Na bisobanura 'and'."
+  - "Imibarwa ihuzwa n'itsinda ry'amajambo."
+
+  # --- Story text ---
+  - "Umurwayi yaje ku kigo nderabuzima."
+  - "Afite umuriro n'inkorora."
+  - "Yagize igicuri rimwe."
+  - "Azanywa imiti iminsi 7."
+  - "Abarwayi benshi barwaye igituntu."
+
+  # --- Story fill-in-blank complete sentences ---
+  - "Umurwayi afite umuriro."
+  - "Yagize igicuri rimwe."
+  - "Azanywa imiti iminsi 7."
+  - "Abarwayi benshi barwaye."
+
+  # --- Story fill-in-blank answer options ---
+  - "afite"
+  - "bafite"
+  - "ifite"
+  - "igicuri"
+  - "ibicuri"
+  - "agicuri"
+  - "Azanywa"
+  - "Anywa"
+  - "Yanywe"
+  - "benshi"
+  - "byinshi"
+  - "menshi"
+
+  # --- Multiple choice Kinyarwanda answer options ---
+  - "Nfite"
+  - "Ufite"
+  - "Afite"
+  - "Bafite"
+  - "Ntafite"
+  - "Nfiti"
+  - "Nfita"
+  - "Abarwayi"
+  - "Ibarwayi"
+  - "Imirwayi"
+  - "Uburwayi"

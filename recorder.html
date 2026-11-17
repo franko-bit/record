@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audio Recorder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1b1b18; --muted:#6f6c5e; --green:#4f8f1f; --green-d:#3f7616; --green-l:#e6f1d6;
+  --red:#d2432f; --card:rgba(255,255,255,.78); --line:#d9d4bd; --shadow:0 10px 30px rgba(130,110,20,.10);
+}
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%}
+body{font-family:'Urbanist',system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);line-height:1.45;
+  background:radial-gradient(circle at 100% 0%,#f8efae 0,rgba(248,239,174,0) 45%),radial-gradient(circle at 0% 100%,#f6f0c8 0,rgba(246,240,200,0) 40%),#fcfaf0;
+  padding:24px 16px 80px}
+.wrap{max-width:760px;margin:0 auto}
+.card{background:var(--card);border:1px solid #fff;border-radius:28px;box-shadow:var(--shadow);backdrop-filter:blur(6px)}
+button{font:inherit;cursor:pointer;border:0;color:inherit}
+button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+button:disabled{opacity:.45;cursor:not-allowed}
+
+/* header */
+.head{position:relative;padding:28px 28px 22px;margin-bottom:16px}
+.badge{position:absolute;top:0;right:0;background:#fffdf3;border-bottom-left-radius:22px;border-top-right-radius:28px;padding:10px 20px;font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px;box-shadow:-4px 4px 14px rgba(130,110,20,.06)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+h1{font-size:28px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
+.sub{color:var(--muted);font-size:15px;max-width:46ch}
+.bar{height:8px;border-radius:99px;background:#ebe6cf;margin:20px 0 4px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--green);border-radius:99px;transition:width .35s}
+.divider{border:0;border-top:1.5px dashed var(--line);margin:20px 0}
+.opts{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.switch{display:flex;align-items:center;gap:12px;font-weight:600;cursor:pointer;user-select:none}
+.switch small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.switch input{position:absolute;opacity:0}
+.track{width:48px;height:28px;border-radius:99px;background:#d8d3bb;position:relative;transition:.2s;flex:none}
+.track:after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:.2s}
+.switch input:checked+.track{background:var(--green)}
+.switch input:checked+.track:after{transform:translateX(20px)}
+.switch input:focus-visible+.track{outline:2px solid var(--green);outline-offset:2px}
+
+/* pills */
+.pill{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:99px;background:#fffdf6;box-shadow:0 4px 14px rgba(130,110,20,.12);font-weight:600;font-size:15px;transition:transform .1s,box-shadow .15s;white-space:nowrap}
+.pill:hover:not(:disabled){box-shadow:0 6px 18px rgba(130,110,20,.18)}
+.pill:active:not(:disabled){transform:scale(.97)}
+.pill.sm{padding:9px 15px;font-size:14px}
+.pill.go{background:var(--green);color:#fff;box-shadow:0 6px 16px rgba(79,143,31,.32)}
+.pill.go:hover:not(:disabled){background:var(--green-d)}
+.pill.stop{background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(210,67,47,.32)}
+.pill.ghost{color:var(--red)}
+.ico{width:18px;height:18px;flex:none}
+
+/* panels */
+details.panel{margin-bottom:12px;padding:0 24px}
+details.panel summary{padding:18px 0;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.panel summary::-webkit-details-marker{display:none}
+details.panel summary:after{content:"+";font-size:22px;color:var(--muted)}
+details.panel[open] summary:after{content:"–"}
+details.panel .in{padding-bottom:22px;display:grid;gap:12px}
+label.f{display:grid;gap:6px;font-size:14px;font-weight:600}
+label.f span{font-weight:400;color:var(--muted)}
+input[type=text],input[type=file],select,textarea{font:inherit;padding:12px 16px;border-radius:16px;border:1.5px solid var(--line);background:#fffdf6;width:100%}
+textarea{min-height:150px;resize:vertical}
+.note{font-size:13px;color:var(--muted)}
+.yaml-controls{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+.yaml-controls .f{min-width:0}
+.yaml-status{grid-column:1/-1}
+
+/* list */
+.toolbar{display:flex;justify-content:space-between;align-items:center;margin:22px 4px 12px;gap:10px;flex-wrap:wrap}
+.toolbar h2{font-size:18px;font-weight:600}
+.row{display:flex;align-items:center;gap:16px;padding:18px 20px;margin-bottom:12px;border-radius:24px;transition:box-shadow .2s,border-color .2s;border:1.5px solid transparent}
+.row.is-rec{border-color:var(--red);box-shadow:0 0 0 5px rgba(210,67,47,.10),var(--shadow)}
+.tick{flex:none;width:28px;height:28px;border-radius:50%;background:#e4dfc6;display:grid;place-items:center;color:#fff;transition:background .2s}
+.row.done .tick{background:var(--green)}
+.tick svg{width:16px;height:16px}
+.txt{flex:1;min-width:0}
+.txt p{font-size:18px;font-weight:500;overflow-wrap:anywhere}
+.txt p.word{font-size:22px;font-weight:600}
+.meta{font-size:13px;color:var(--muted);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.meta .err{color:var(--red);font-weight:600}
+.meta a{color:var(--green-d);font-weight:600;text-decoration:none;cursor:pointer}
+.meta a:hover{text-decoration:underline}
+.acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.rec-dot{width:9px;height:9px;border-radius:50%;background:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.spin{width:16px;height:16px;border:2.5px solid #cfe3b6;border-top-color:var(--green);border-radius:50%;animation:rot .7s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.empty{text-align:center;padding:40px 20px;color:var(--muted)}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;max-width:90vw;z-index:9}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:560px){
+  .head{padding:24px 20px 20px}.badge{position:static;border-radius:99px;display:inline-flex;margin-bottom:14px}
+  .row{flex-wrap:wrap}.acts{width:100%;justify-content:flex-start}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="card head">
+    <div class="badge"><span class="dot"></span><span id="count">0 / 0 uploaded</span></div>
+    <h1>Audio recorder</h1>
+    <p class="sub">Record each word and sentence, check it, then upload to Cloudinary.</p>
+    <div class="bar"><i id="prog"></i></div>
+    <hr class="divider">
+    <div class="opts">
+      <label class="switch">
+        <input type="checkbox" id="auto">
+        <span class="track"></span>
+        <span>Auto-save<small>Upload right after recording, no approval step</small></span>
+      </label>
+      <button class="pill sm" id="export">Export links (JSON)</button>
+    </div>
+  </section>
+
+  <details class="card panel" id="yamlPanel" open>
+    <summary>Load a YAML recording list</summary>
+    <div class="in">
+      <div class="yaml-controls">
+        <label class="f">Project YAML file <span>Each file keeps its own recording progress</span>
+          <select id="yamlSelect"><option value="">Loading project files…</option></select>
+        </label>
+        <button class="pill go" id="loadYaml">Load file</button>
+        <label class="f">Or choose a YAML file from your device
+          <input type="file" id="yamlUpload" accept=".yaml,.yml,text/yaml">
+        </label>
+        <span class="note yaml-status" id="yamlStatus" role="status" aria-live="polite"></span>
+      </div>
+    </div>
+  </details>
+
+  <details class="card panel" id="setPanel">
+    <summary>Cloudinary connection</summary>
+    <div class="in">
+      <p class="note" id="cloudStatus">Checking server credentials…</p>
+      <p class="note">Uploads are signed by the local server using credentials in <code>.env</code>. The API secret is never sent to this page.</p>
+    </div>
+  </details>
+
+  <details class="card panel">
+    <summary>Edit items</summary>
+    <div class="in">
+      <label class="f">One item per line <span>Optional custom ID: id|text. Without an ID, one is made from the text.</span>
+        <textarea id="list"></textarea></label>
+      <button class="pill go" id="applyList" style="justify-self:start">Update list</button>
+    </div>
+  </details>
+
+  <div class="toolbar"><h2 id="toolbarTitle">Items to record</h2><span class="note" id="remaining"></span></div>
+  <div id="items"></div>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="/yaml.js"></script>
+<script>
+/* ---------- default items (edit here or use "Edit items") ---------- */
+const DEFAULT_ITEMS = `Muraho
+Murakoze
+Mwiriwe
+Nitwa Frank
+Ndishimiye kukumenya
+Ese wafashe ifunguro rya mu gitondo?`;
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const slug = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50) || 'item';
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem('rec.'+k); return v === null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem('rec.'+k, JSON.stringify(v)); }catch(e){} }
+};
+const fmt = ms => { const s = Math.floor(ms/1000); return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); };
+let toastT; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),3200); }
+
+const I = {
+  mic:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+  stop:'<svg class="ico" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>',
+  play:'<svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+  pause:'<svg class="ico" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
+  redo:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>',
+  trash:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>',
+  check:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  up:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>'
+};
+
+/* ---------- state ---------- */
+let auto = store.get('auto', false);
+let urls = store.get('urls', {});
+let sourceLists = store.get('sourceLists', {});
+let sourceId = 'custom', sourceLabel = 'Custom list';
+let raw = store.get('list', DEFAULT_ITEMS);
+let items = [];
+let rec = null;
+let player = null;
+
+function parseList(txt){
+  const seen = {};
+  return txt.split('\n').map(l => l.trim()).filter(Boolean).map(l => {
+    let localId, text; const p = l.indexOf('|');
+    if(p > 0){ localId = slug(l.slice(0,p)); text = l.slice(p+1).trim(); }
+    else { text = l; localId = slug(l); }
+    if(seen[localId]){ seen[localId]++; localId += '-' + seen[localId]; } else seen[localId] = 1;
+    const id = sourceId + '-' + localId;
+    const saved = urls[id] || (sourceId === 'custom' ? urls[localId] : '') || '';
+    const savedRecord = saved && typeof saved === 'object' ? saved : null;
+    return {id, sourceId, text, blob:null, dur:0,
+      url:typeof saved === 'string' ? saved : savedRecord && typeof savedRecord.url === 'string' ? savedRecord.url : '',
+      publicId:savedRecord && typeof savedRecord.publicId === 'string' ? savedRecord.publicId : '', busy:'', err:''};
+  });
+}
+function buildItems(){ items = parseList(raw); }
+
+/* ---------- render ---------- */
+function render(){
+  const doneCount = items.filter(x => x.url && !x.blob).length;
+  $('#count').textContent = doneCount + ' / ' + items.length + ' uploaded';
+  $('#prog').style.width = (items.length ? doneCount/items.length*100 : 0) + '%';
+  $('#remaining').textContent = items.length - doneCount ? (items.length - doneCount) + ' left' : (items.length ? 'All uploaded' : '');
+  if(!items.length){ $('#items').innerHTML = '<div class="card empty">No items yet. Add words or sentences under Edit items.</div>'; return; }
+
+  $('#items').innerHTML = items.map((it, i) => {
+    const isRec = rec && rec.i === i;
+    const playing = player && player.i === i;
+    const has = !!it.blob, done = !!it.url && !has && !it.busy;
+    const word = it.text.trim().split(/\s+/).length <= 2 ? ' word' : '';
+    let meta = '', acts = '';
+    const lock = rec && !isRec;
+    const playBtn = `<button class="pill sm" data-a="play" data-i="${i}">${playing ? I.pause+'Pause' : I.play+'Play'}</button>`;
+
+    if(isRec){
+      meta = `<span class="rec-dot"></span><span id="t${i}">0:00</span>`;
+      acts = `<button class="pill stop" data-a="stop" data-i="${i}">${I.stop}Stop</button>`;
+    } else if(it.busy === 'up' || it.busy === 'del'){
+      meta = `<span class="spin"></span>${it.busy === 'up' ? 'Uploading…' : 'Deleting…'}`;
+    } else if(has){
+      meta = `<span>Recorded ${fmt(it.dur)}</span>` + (it.err ? `<span class="err">${esc(it.err)}</span>` : '');
+      acts = playBtn +
+        `<button class="pill sm" data-a="rerec" data-i="${i}" ${lock?'disabled':''}>${I.redo}Re-record</button>` +
+        `<button class="pill sm ghost" data-a="del" data-i="${i}">${I.trash}Delete</button>` +
+        `<button class="pill sm go" data-a="approve" data-i="${i}">${it.err ? I.up+'Retry upload' : I.check+'Approve'}</button>`;
+    } else if(done){
+      meta = `<span>Uploaded</span><a data-a="copy" data-i="${i}">Copy link</a>` + (it.err ? `<span class="err">${esc(it.err)}</span>` : '');
+      acts = playBtn +
+        `<button class="pill sm" data-a="rerec" data-i="${i}" ${lock?'disabled':''}>${I.redo}Replace</button>` +
+        `<button class="pill sm ghost" data-a="del" data-i="${i}">${I.trash}Delete</button>`;
+    } else {
+      meta = it.err ? `<span class="err">${esc(it.err)}</span>` : '';
+      acts = `<button class="pill go" data-a="rec" data-i="${i}" ${lock?'disabled':''}>${I.mic}Record</button>`;
+    }
+    return `<article class="card row${isRec?' is-rec':''}${done?' done':''}">
+      <span class="tick">${I.check}</span>
+      <div class="txt"><p class="${word.trim()}">${esc(it.text)}</p><div class="meta">${meta}</div></div>
+      <div class="acts">${acts}</div></article>`;
+  }).join('');
+}
+
+/* ---------- playback ---------- */
+function stopPlay(){
+  if(!player) return;
+  player.audio.pause();
+  if(player.objUrl) URL.revokeObjectURL(player.objUrl);
+  player = null;
+}
+function togglePlay(i){
+  if(player && player.i === i){ stopPlay(); return render(); }
+  stopPlay();
+  const it = items[i]; let objUrl = null, src = it.url;
+  if(it.blob){ objUrl = URL.createObjectURL(it.blob); src = objUrl; }
+  if(!src) return;
+  const audio = new Audio(src);
+  audio.onended = () => { if(player && player.audio === audio){ stopPlay(); render(); } };
+  audio.onerror = () => { stopPlay(); render(); toast('Could not play this audio'); };
+  player = {i, audio, objUrl};
+  audio.play().catch(() => { stopPlay(); render(); });
+  render();
+}
+
+/* ---------- recording ---------- */
+async function startRec(i){
+  if(rec) return;
+  if(!navigator.mediaDevices || !window.MediaRecorder) return toast('Recording is not supported in this browser');
+  stopPlay();
+  let stream;
+  try{ stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}}); }
+  catch(e){ return toast('Microphone blocked. Allow mic access and try again.'); }
+  const mime = ['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'].find(t => MediaRecorder.isTypeSupported(t)) || '';
+  const mr = new MediaRecorder(stream, mime ? {mimeType:mime} : undefined);
+  const chunks = [];
+  mr.ondataavailable = e => { if(e.data.size) chunks.push(e.data); };
+  mr.onstop = () => {
+    stream.getTracks().forEach(t => t.stop());
+    if(rec) clearInterval(rec.tick);
+    const dur = rec ? Date.now() - rec.t0 : 0;
+    const it = items[i];
+    rec = null;
+    if(dur < 400 || !chunks.length){ render(); return toast('Too short. Hold on a bit longer.'); }
+    it.blob = new Blob(chunks, {type: mr.mimeType || mime || 'audio/webm'});
+    it.dur = dur; it.err = '';
+    render();
+    if(auto) upload(i);
+  };
+  mr.start();
+  rec = {i, mr, stream, t0:Date.now(), tick:setInterval(() => {
+    const el = $('#t'+i); if(el && rec) el.textContent = fmt(Date.now() - rec.t0);
+  }, 250)};
+  render();
+}
+function stopRec(){ if(rec && rec.mr.state !== 'inactive') rec.mr.stop(); }
+
+/* ---------- Cloudinary upload and deletion ---------- */
+async function responseJson(response){
+  const result = await response.json();
+  if(!response.ok) throw new Error(result.error && result.error.message || result.error || 'Request failed (' + response.status + ')');
+  return result;
+}
+async function upload(i){
+  const it = items[i];
+  if(!it.blob || it.busy) return;
+  stopPlay();
+  it.busy = 'up'; it.err = ''; render();
+  try{
+    const signed = await responseJson(await fetch('/api/sign-upload', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({sourceId:it.sourceId, itemId:it.id.slice(it.sourceId.length + 1)})
+    }));
+    const t = it.blob.type;
+    const ext = t.includes('mp4') ? 'm4a' : t.includes('ogg') ? 'ogg' : 'webm';
+    const fd = new FormData();
+    fd.append('file', it.blob, it.id + '.' + ext);
+    fd.append('api_key', signed.apiKey);
+    fd.append('timestamp', signed.timestamp);
+    fd.append('public_id', signed.public_id);
+    fd.append('overwrite', signed.overwrite);
+    fd.append('invalidate', signed.invalidate);
+    fd.append('signature', signed.signature);
+    const uploaded = await responseJson(await fetch(
+      `https://api.cloudinary.com/v1_1/${encodeURIComponent(signed.cloudName)}/video/upload`,
+      {method:'POST', body:fd}
+    ));
+    it.url = uploaded.secure_url;
+    it.publicId = uploaded.public_id;
+    it.blob = null; it.dur = 0;
+    urls[it.id] = {url:it.url, publicId:it.publicId}; store.set('urls', urls);
+  }catch(e){
+    it.err = e.message === 'Failed to fetch' ? 'Network error. Check connection and retry.' : e.message;
+  }
+  it.busy = '';
+  render();
+}
+async function deleteUploaded(i){
+  const it = items[i];
+  if(!it.publicId) return toast('This older upload has no stored Cloudinary ID and cannot be deleted here');
+  it.busy = 'del'; it.err = ''; render();
+  try{
+    await responseJson(await fetch('/api/delete', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({publicId:it.publicId})
+    }));
+    delete urls[it.id]; store.set('urls', urls);
+    it.url = ''; it.publicId = ''; it.dur = 0;
+  }catch(e){ it.err = e.message; }
+  it.busy = '';
+  render();
+}
+
+/* ---------- YAML loading ---------- */
+function sourceKey(filename, text){
+  let hash = 2166136261;
+  for(let i=0;i<text.length;i++){ hash ^= text.charCodeAt(i); hash = Math.imul(hash, 16777619); }
+  return slug(filename.replace(/\.ya?ml$/i,'')) + '-' + (hash >>> 0).toString(36);
+}
+function activateSource(id, label, records){
+  if(rec) return toast('Stop the current recording before switching lists');
+  stopPlay();
+  sourceId = id; sourceLabel = label;
+  if(!Object.prototype.hasOwnProperty.call(sourceLists, id)){
+    sourceLists[id] = records.join('\n');
+    store.set('sourceLists', sourceLists);
+  }
+  raw = sourceLists[id];
+  store.set('activeSource', {id, label});
+  $('#list').value = raw;
+  $('#toolbarTitle').textContent = 'Items to record — ' + label;
+  buildItems(); render();
+  $('#yamlStatus').textContent = records.length + ' items loaded from ' + label;
+  $('#items').scrollIntoView({behavior:'smooth', block:'start'});
+}
+async function loadYaml(){
+  if(rec) return toast('Stop the current recording before switching lists');
+  const localFile = $('#yamlUpload').files[0];
+  const selected = $('#yamlSelect').value;
+  if(!localFile && !selected) return toast('Choose a YAML file first');
+  $('#loadYaml').disabled = true;
+  $('#yamlStatus').textContent = 'Loading…';
+  try{
+    const filename = localFile ? localFile.name : selected;
+    let text;
+    if(localFile) text = await localFile.text();
+    else {
+      const response = await fetch('/api/yaml/' + encodeURIComponent(filename));
+      if(!response.ok) throw new Error('Could not read the selected project file');
+      text = await response.text();
+    }
+    const records = YamlRecords.parseRecords(text);
+    activateSource(sourceKey(filename, text), filename, records);
+  }catch(e){
+    $('#yamlStatus').textContent = e.message;
+    toast('Could not load YAML: ' + e.message);
+  }finally{
+    $('#yamlUpload').value = '';
+    $('#loadYaml').disabled = false;
+  }
+}
+async function loadYamlChoices(){
+  try{
+    const files = await responseJson(await fetch('/api/yaml'));
+    $('#yamlSelect').innerHTML = files.map(file => `<option value="${esc(file)}">${esc(file.replace(/\.ya?ml$/i,''))}</option>`).join('');
+    if(!files.length) $('#yamlSelect').innerHTML = '<option value="">No project YAML files found</option>';
+  }catch(e){
+    $('#yamlSelect').innerHTML = '<option value="">Project file list unavailable</option>';
+    $('#yamlStatus').textContent = e.message;
+  }
+}
+
+/* ---------- actions ---------- */
+$('#items').addEventListener('click', e => {
+  const b = e.target.closest('[data-a]'); if(!b) return;
+  const i = +b.dataset.i, it = items[i], a = b.dataset.a;
+  if(a === 'rec' || a === 'rerec'){
+    if(it.busy) return;
+    if(a === 'rerec' && player && player.i === i) stopPlay();
+    it.blob = null; it.err = ''; startRec(i);
+  }
+  else if(a === 'stop') stopRec();
+  else if(a === 'play') togglePlay(i);
+  else if(a === 'approve') upload(i);
+  else if(a === 'del'){
+    if(player && player.i === i) stopPlay();
+    if(it.blob){ it.blob = null; it.dur = 0; it.err = ''; render(); }
+    else deleteUploaded(i);
+  }
+  else if(a === 'copy'){ navigator.clipboard.writeText(it.url).then(() => toast('Link copied'), () => toast(it.url)); }
+});
+
+$('#auto').addEventListener('change', e => { auto = e.target.checked; store.set('auto', auto); toast(auto ? 'Auto-save on' : 'Auto-save off'); });
+$('#loadYaml').addEventListener('click', loadYaml);
+$('#yamlSelect').addEventListener('change', () => { $('#yamlUpload').value = ''; });
+
+$('#applyList').addEventListener('click', () => {
+  if(rec) return toast('Stop the current recording first');
+  stopPlay(); raw = $('#list').value;
+  sourceLists[sourceId] = raw; store.set('sourceLists', sourceLists);
+  if(sourceId === 'custom') store.set('list', raw);
+  buildItems(); render(); toast('List updated');
+});
+
+$('#export').addEventListener('click', () => {
+  const out = {}; items.forEach(it => { if(it.url) out[it.id] = {text:it.text, url:it.url}; });
+  if(!Object.keys(out).length) return toast('Nothing uploaded yet');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(out,null,2)], {type:'application/json'}));
+  a.download = 'recordings.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+
+window.addEventListener('beforeunload', e => { if(items.some(x => x.blob)){ e.preventDefault(); e.returnValue = ''; } });
+
+/* ---------- init ---------- */
+$('#auto').checked = auto;
+const activeSource = store.get('activeSource', null);
+if(activeSource && Object.prototype.hasOwnProperty.call(sourceLists, activeSource.id)){
+  sourceId = activeSource.id; sourceLabel = activeSource.label;
+  raw = sourceLists[sourceId];
+}
+$('#list').value = raw;
+$('#toolbarTitle').textContent = 'Items to record — ' + sourceLabel;
+buildItems(); render();
+loadYamlChoices();
+fetch('/api/config').then(responseJson).then(config => {
+  $('#cloudStatus').textContent = config.configured ?
+    'Connected. Recordings upload directly to Cloudinary.' :
+    'Credentials not found. Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET to .env, then restart the server.';
+  if(!config.configured) $('#setPanel').open = true;
+}).catch(e => {
+  $('#cloudStatus').textContent = 'Recorder server unavailable: ' + e.message + '. Start the app with npm start.';
+  $('#setPanel').open = true;
+});
+</script>
+</body>
+</html>

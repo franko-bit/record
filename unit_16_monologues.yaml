@@ -1,0 +1,62 @@
+records:
+  # --- Fever and Cough monologue ---
+  - "Umurwayi yaje ku kigo nderabuzima. Yamaze iminsi 5 afite umuriro n'inkorora. Yumva kandi ububabare mu gituza. Nijoro abira ibyuya. Yatakaje ibiro. Afite amacandwe."
+
+  # --- Stomach Pain monologue ---
+  - "Umurwayi afite ububabare mu nda kuva hashize iminsi 3. Ububabare buri mu gice cyo hejuru y'inda. Biba bibi iyo anyweye ikawa cyangwa iyo afite agahinda. Yanyweye imiti yo kubugabanya ariko ntiyamufashije. Yumva iseseme ariko ntaruka. Nta muriro afite."
+
+  # --- Headache and Dizziness monologue ---
+  - "Umurwayi afite umutwe n'isereri kuva hashize icyumweru. Umutwe ubabaza cyane mu gitondo. Yumva nk'aho ibintu bizunguruka iyo ahagaze. Yapimwe umuvuduko w'amaraso asangwa ari 160/100. Nta kubabara mu gituza afite. Nta n'ubuhumekero buke afite."
+
+  # --- Cough and Weight Loss monologue ---
+  - "Umurwayi afite inkorora kuva hashize ibyumweru 6. Yatakaje ibiro byinshi cyane. Nijoro abira ibyuya bikabije. Yakoroye amaraso incuro 2 mu nkorora ye. Mu muryango we harimo umuvandimwe urwaye igituntu."
+
+  # --- HIV Testing monologue ---
+  - "Umurwayi yaje ku kigo nderabuzima ashaka kwipimisha ubwandu bwa SIDA (HIV). Afite ubwoba bwinshi bitewe n'uko abantu bakunda guheza abafite ubwandu. Yamaze amezi 3 afite umuriro n'umunaniro udashira. Yifuza kumenya uko ahagaze kugira ngo yite ku buzima bwe. Kugeza ubu ntarabibwira uwo bashakanye."
+
+  # --- Pregnancy Danger Signs monologue ---
+  - "Umugore utwite amezi 8 yaje ku kigo nderabuzima. Afite umutwe ukaze cyane n'amaso atabona neza. Afite ukubyimba mu maso no mu ntoki. Yapimwe umuvuduko w'amaraso asangwa ari 170/110. Yumva ububabare mu gice cyo hejuru cy'inda. Nta maraso arimo kuva."
+
+  # --- Child Fever monologue ---
+  - "Umwana w'imyaka 3 yazanywe na nyina ku kigo nderabuzima. Afite umuriro mwinshi kuva hashize iminsi 2. Yanze konka no kurya ikintu cyose. Yagize igicuri rimwe mu gitondo. Afite ubuhumekero bugoranye cyane. Amaso ye yinjiye mu mutwe kandi afite umunwa wumye."
+
+  # --- Malaria monologue ---
+  - "Umurwayi afite umuriro n'imbeho nyinshi kuva hashize iminsi 4. Afite n'umutwe udashira hamwe n'iseseme. Yapimwe asanganwa malariya. Ntabwo aryama mu nshundura irinda imibu kuko ntayo afite. Hafi y'urugo rwe hari amazi adatemba menshi. Ubushyuhe bwe buri kuri dogere 38.5."
+
+  # --- Diabetes monologue ---
+  - "Umurwayi ufite imyaka 55 yaje ku kigo nderabuzima. Yamaze amezi 3 yumva umunaniro ukabije. Anywa amazi menshi cyane kandi anyara incuro nyinshi zidasanzwe. Yatakaje ibiro byinshi nubwo arya neza. Afite umuvuduko w'amaraso uri kuri 150/95. Mu muryango we hari abandi barwaye diyabete."
+
+  # --- Mental Health monologue ---
+  - "Umurwayi ufite imyaka 28 yaje ku kigo nderabuzima. Yamaze amezi 4 yumva agahinda kenshi n'ubwoba budashira. Ntashobora gusinzira neza nijoro. Ntiyishimira ibintu byose yahoze akunda gukora. Yumva nta cyizere cy'ubuzima afite. Yigeze no gutekereza kwiyangiza incuro 2. Umuryango we ntabwo umwitaho cyangwa ngo umwumve."
+
+  # --- Child with Diarrhea monologue ---
+  - "Umwana w'amezi 18 yazanywe na nyina. Afite impiswi ikaze kuva hashize iminsi 3. Yahinduye inshuro zirenga 8 ku munsi. Aranka cyangwa ngo arye bike cyane. Afite amaso yinjiye mu mutwe. Uruhu rwe rugaruka buhoro cyane iyo rufashwe. Afite n'umunwa wumye cyane."
+  - "Umwana w'amezi 18 yazanywe na nyina. Afite impiswi ikaze kuva hashize iminsi 3. Yahinduye inshuro 8 ku munsi. Aranka cyangwa ngo arye bike cyane. Afite amaso yinjiye mu mutwe. Uruhu rwe rugaruka buhoro cyane iyo rufashwe. Afite n'umunwa wumye cyane."
+
+  # --- Chest Pain monologue ---
+  - "Umurwayi ufite imyaka 60 yaje ku kigo nderabuzima. Afite ububabare bukabije mu gituza kuva hashize amasaha 2. Ububabare burakaze cyane kandi buratembera bukagera mu kuboko kw'ibumoso no mu ijosi. Abira ibyuya byinshi bikabije. Afite n'ubuhumekero bugoranye hamwe n'iseseme."
+
+  # --- TB Treatment monologue ---
+  - "Umurwayi ari mu buvuzi bw'igituntu amaze amezi 2. Anywa imiti ye buri munsi ku kigo nderabuzima. Yamaze iminsi 3 yumva iseseme n'isereri nyuma yo kumira imiti ye. Nubwo ameze neza kurusha mbere, arifuza guhagarika imiti kubera izo ngaruka z'umuti."
+
+  # --- HIV Treatment monologue ---
+  - "Umurwayi amaze amezi 8 ari ku miti igabanya ubukana bw'ubwandu bwa SIDA (ART). Anywa imiti ye buri munsi ku isaha imwe ntacyo yasibije. Umubare wa virusi mu maraso ye uri hasi cyane ku buryo utaboneka (undetectable). Abasirikare b'umubiri (CD4) nabo bazamutse neza. Yabwiye uwo bashakanye uko ameze kandi buri gihe bakoresha agakingirizo. Yumva ameze neza cyane."
+
+  # --- Multiple Symptoms monologue ---
+  - "Umurwayi ufite imyaka 40 yaje ku kigo nderabuzima. Afite umuriro kuva hashize icyumweru. Afite inkorora idashira n'ububabare bukabije mu gituza. Yatakaje ibiro byinshi cyane. Nijoro abira ibyuya byinshi kandi yumva afite umunaniro mwinshi. Yapimwe asanganwa igituntu ndetse akaba afite n'indwara ya diyabete."
+
+  # --- Pregnancy monologue ---
+  - "Umugore utwite amezi 7 yaje ku kigo nderabuzima afite umutwe ukaze cyane n'amaso atabona neza. Afite ukubyimba mu maso no mu ntoki. Yapimwe umuvuduko w'amaraso asangwa ari 180/120. Umubyaza yamubwiye kujya ku bitaro by'akarere ako kanya. Yumva afite n'iseseme nyinshi."
+
+  # --- Child with Fever and Cough monologue ---
+  - "Umwana w'amezi 9 yazanywe na nyina ku kigo nderabuzima. Afite umuriro kuva hashize iminsi 3. Afite inkorora n'ubuhumekero bugoranye. Araniga iyo ahumeka. Igituza cyinjiye mu nda iyo ahumeka. Ntashobora kunywa. Afite amaso yinjiye."
+
+  # --- Medication Adherence monologue ---
+  - "Umurwayi ufite umuvuduko w'amaraso yahagaritse imiti amezi 2. Yabikoreye kubera ko yumvaga ari mwiza kandi imiti yamutezaga ibizunguzungu. Ubu arumva umutwe n'ikizunguzungu. Umuvuduko w'amaraso ni 170/105. Ntiyigeze abwira muganga ko yahagaritse imiti."
+
+  # --- Mental Health Stigma monologue ---
+  - "Umurwayi ufite imyaka 35 yaje ku kigo nderabuzima. Yamaze amezi 6 yumva agahinda n'ubwoba. Ntiyabwiye umuryango we kubera gutinya ko bazamwita umusazi. Yigeze kugerageza kwiyangiza rimwe. Yifuza ubufasha ariko aratinya ko abandi bamenya. Ntabwo yigeze agera ku muganga w'ubuzima bwo mu mutwe."
+
+  # --- Domestic Violence monologue ---
+  - "Umugore ufite imyaka 30 yaje ku kigo nderabuzima. Afite ibisebe mu maso no mu maboko. Avuga ko yaguye ariko afite ubwoba. Umugabo we aramukubita buri gihe anyweye inzoga. Afite abana 3. Aratinya kuvuga kubera ubwoba ko umugabo we yamwica. Yifuza ubufasha."
+  - "Umugore ufite imyaka 45 yaje ku kigo nderabuzima. Afite ibisebe mu maso no mu maboko. Avuga ko yaguye ariko afite ubwoba. Umugabo we aramukubita buri gihe anyweye inzoga. Afite abana 3. Aratinya kuvuga kubera ubwoba ko umugabo we yamwica. Yifuza ubufasha."
