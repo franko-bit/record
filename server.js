@@ -187,8 +187,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   const routes = {
-    '/': ['recorder.html', 'text/html; charset=utf-8'],
-    '/recorder.html': ['recorder.html', 'text/html; charset=utf-8'],
+    '/': ['index.html', 'text/html; charset=utf-8'],
+    '/index.html': ['index.html', 'text/html; charset=utf-8'],
+    '/recorder.html': ['index.html', 'text/html; charset=utf-8'],
     '/yaml.js': ['yaml.js', 'text/javascript; charset=utf-8']
   };
   const route = routes[url.pathname];
