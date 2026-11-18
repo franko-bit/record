@@ -5,6 +5,8 @@ const path = require('node:path');
 
 const ROOT = __dirname;
 const PORT = Number(process.env.PORT || 4173);
+const IS_RENDER = process.env.RENDER === 'true' || !!process.env.RENDER_EXTERNAL_HOSTNAME;
+const HOST = IS_RENDER ? '0.0.0.0' : '127.0.0.1';
 const CLOUDINARY_API = 'https://api.cloudinary.com/v1_1';
 
 loadEnvFile();
@@ -175,7 +177,7 @@ async function handleApi(req, res, url) {
 }
 
 const server = http.createServer(async (req, res) => {
-  if (!localHost(req)) {
+  if (!IS_RENDER && !localHost(req)) {
     res.writeHead(403);
     return res.end('Local access only');
   }
@@ -203,8 +205,10 @@ const server = http.createServer(async (req, res) => {
   fs.createReadStream(path.join(ROOT, file)).pipe(res);
 });
 
-server.listen(PORT, '127.0.0.1', () => {
-  console.log(`Audio recorder available at http://127.0.0.1:${PORT}`);
+server.listen(PORT, HOST, () => {
+  const address = IS_RENDER && process.env.RENDER_EXTERNAL_HOSTNAME ?
+    `https://${process.env.RENDER_EXTERNAL_HOSTNAME}` : `http://127.0.0.1:${PORT}`;
+  console.log(`Audio recorder available at ${address}`);
 });
 
 module.exports = { signParams, validId };
