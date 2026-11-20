@@ -4,7 +4,9 @@
 
     const lines = source.replace(/^\uFEFF/, '').replace(/\r/g, '').split('\n');
     const recordsIndex = lines.findIndex(line => /^records\s*:\s*(?:#.*)?$/.test(line));
-    if (recordsIndex === -1) throw new Error('Expected a top-level "records:" list');
+    if (recordsIndex === -1) {
+      return parseTopLevelList(lines);
+    }
 
     const records = [];
     for (let i = recordsIndex + 1; i < lines.length; i++) {
@@ -20,6 +22,26 @@
     }
 
     if (!records.length) throw new Error('The YAML "records:" list is empty');
+    return records;
+  }
+
+  function parseTopLevelList(lines) {
+    const records = [];
+    let hasYamlEntry = false;
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (!line.trim() || /^\s*#/.test(line)) continue;
+      hasYamlEntry = hasYamlEntry || /^\s*-/.test(line);
+      const match = line.match(/^-\s+(.+?)\s*$/);
+      if (!match) {
+        if (!hasYamlEntry) throw new Error('Expected a top-level "records:" list or YAML list');
+        throw new Error(`Unsupported YAML entry on line ${i + 1}`);
+      }
+      const value = parseScalar(match[1], i + 1);
+      if (!value.trim()) throw new Error(`Empty record on line ${i + 1}`);
+      records.push(value);
+    }
+    if (!records.length) throw new Error('Expected a top-level "records:" list or YAML list');
     return records;
   }
 

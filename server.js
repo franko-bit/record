@@ -99,7 +99,7 @@ async function handleApi(req, res, url) {
 
   if (req.method === 'GET' && url.pathname === '/api/yaml') {
     const files = fs.readdirSync(ROOT)
-      .filter(name => /^unit_[a-z0-9_-]+\.ya?ml$/i.test(name))
+      .filter(name => /^(?:unit_[a-z0-9_-]+|project)\.ya?ml$/i.test(name))
       .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
     return json(res, 200, files);
   }
@@ -107,7 +107,7 @@ async function handleApi(req, res, url) {
   const yamlMatch = url.pathname.match(/^\/api\/yaml\/([^/]+)$/);
   if (req.method === 'GET' && yamlMatch) {
     const name = decodeURIComponent(yamlMatch[1]);
-    if (!/^unit_[a-z0-9_-]+\.ya?ml$/i.test(name)) return json(res, 400, { error: 'Invalid YAML filename' });
+    if (!/^(?:unit_[a-z0-9_-]+|project)\.ya?ml$/i.test(name)) return json(res, 400, { error: 'Invalid YAML filename' });
     const file = path.join(ROOT, name);
     if (!fs.existsSync(file)) return json(res, 404, { error: 'YAML file not found' });
     res.writeHead(200, { 'Content-Type': 'text/yaml; charset=utf-8', 'Cache-Control': 'no-store' });

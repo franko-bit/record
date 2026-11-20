@@ -22,6 +22,15 @@ test('preserves escaped and apostrophe-quoted text and ignores comments', () => 
   ].join('\n')), ['a\nb', "patient's words", 'plain sentence']);
 });
 
+test('parses legacy top-level YAML lists such as project.yaml', () => {
+  assert.deepEqual(parseRecords([
+    '# --- Project items ---',
+    '- "Zero"',
+    "- 'Patient''s words'",
+    '- Plain sentence # inline comment'
+  ].join('\n')), ['Zero', "Patient's words", 'Plain sentence']);
+});
+
 test('reports invalid or empty recording lists', () => {
   assert.throws(() => parseRecords('items:\n  - hello'), /records:/);
   assert.throws(() => parseRecords('records:\n  # no items'), /empty/);
