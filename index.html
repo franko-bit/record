@@ -196,21 +196,65 @@ let raw = store.get('list', DEFAULT_ITEMS);
 let items = [];
 let rec = null;
 let player = null;
+let duplicateCount = 0;
+let reusedCount = 0;
+
+const normalizeText = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+
+function savedRecord(saved){
+  if(saved && typeof saved === 'object') return saved;
+  return typeof saved === 'string' ? {url:saved, publicId:''} : null;
+}
+
+function recordingIndex(){
+  const index = {};
+  Object.keys(urls).forEach(id => {
+    const saved = savedRecord(urls[id]);
+    if(!saved) return;
+    const key = normalizeText(saved.text || '');
+    if(key) index[key] = saved;
+  });
+  Object.keys(sourceLists).forEach(listSourceId => {
+    const seen = {};
+    sourceLists[listSourceId].split('\n').map(l => l.trim()).filter(Boolean).forEach(l => {
+      const p = l.indexOf('|');
+      const localId = slug(p > 0 ? l.slice(0,p) : l);
+      const text = p > 0 ? l.slice(p+1).trim() : l;
+      const uniqueId = seen[localId] ? localId + '-' + (++seen[localId]) : (seen[localId] = 1, localId);
+      const key = normalizeText(text);
+      if(!key) return;
+      const saved = savedRecord(urls[listSourceId + '-' + uniqueId] ||
+        (listSourceId === 'custom' ? urls[uniqueId] : null));
+      if(saved && !index[key]) index[key] = saved;
+    });
+  });
+  return index;
+}
 
 function parseList(txt){
   const seen = {};
+  const textSeen = {};
+  const recordings = recordingIndex();
+  duplicateCount = 0;
+  reusedCount = 0;
   return txt.split('\n').map(l => l.trim()).filter(Boolean).map(l => {
     let localId, text; const p = l.indexOf('|');
     if(p > 0){ localId = slug(l.slice(0,p)); text = l.slice(p+1).trim(); }
     else { text = l; localId = slug(l); }
+    const textKey = normalizeText(text);
+    if(textSeen[textKey]){ textSeen[textKey]++; duplicateCount++; return null; }
+    textSeen[textKey] = 1;
     if(seen[localId]){ seen[localId]++; localId += '-' + seen[localId]; } else seen[localId] = 1;
     const id = sourceId + '-' + localId;
-    const saved = urls[id] || (sourceId === 'custom' ? urls[localId] : '') || '';
-    const savedRecord = saved && typeof saved === 'object' ? saved : null;
+    const exactSaved = savedRecord(urls[id] || (sourceId === 'custom' ? urls[localId] : null));
+    const sharedSaved = exactSaved || savedRecord(recordings[textKey]);
+    const reused = !!sharedSaved && !exactSaved;
+    if(reused) reusedCount++;
     return {id, sourceId, text, blob:null, dur:0,
-      url:typeof saved === 'string' ? saved : savedRecord && typeof savedRecord.url === 'string' ? savedRecord.url : '',
-      publicId:savedRecord && typeof savedRecord.publicId === 'string' ? savedRecord.publicId : '', busy:'', err:''};
-  });
+      url:sharedSaved && typeof sharedSaved.url === 'string' ? sharedSaved.url : '',
+      publicId:sharedSaved && typeof sharedSaved.publicId === 'string' ? sharedSaved.publicId : '',
+      reused, busy:'', err:''};
+  }).filter(Boolean);
 }
 function buildItems(){ items = parseList(raw); }
 
@@ -243,10 +287,12 @@ function render(){
         `<button class="pill sm ghost" data-a="del" data-i="${i}">${I.trash}Delete</button>` +
         `<button class="pill sm go" data-a="approve" data-i="${i}">${it.err ? I.up+'Retry upload' : I.check+'Approve'}</button>`;
     } else if(done){
-      meta = `<span>Uploaded</span><a data-a="copy" data-i="${i}">Copy link</a>` + (it.err ? `<span class="err">${esc(it.err)}</span>` : '');
-      acts = playBtn +
-        `<button class="pill sm" data-a="rerec" data-i="${i}" ${lock?'disabled':''}>${I.redo}Replace</button>` +
-        `<button class="pill sm ghost" data-a="del" data-i="${i}">${I.trash}Delete</button>`;
+      meta = `<span>${it.reused ? 'Already recorded in another file' : 'Uploaded'}</span><a data-a="copy" data-i="${i}">Copy link</a>` + (it.err ? `<span class="err">${esc(it.err)}</span>` : '');
+      acts = playBtn;
+      if(!it.reused){
+        acts += `<button class="pill sm" data-a="rerec" data-i="${i}" ${lock?'disabled':''}>${I.redo}Replace</button>` +
+          `<button class="pill sm ghost" data-a="del" data-i="${i}">${I.trash}Delete</button>`;
+      }
     } else {
       meta = it.err ? `<span class="err">${esc(it.err)}</span>` : '';
       acts = `<button class="pill go" data-a="rec" data-i="${i}" ${lock?'disabled':''}>${I.mic}Record</button>`;
@@ -344,7 +390,7 @@ async function upload(i){
     it.url = uploaded.secure_url;
     it.publicId = uploaded.public_id;
     it.blob = null; it.dur = 0;
-    urls[it.id] = {url:it.url, publicId:it.publicId}; store.set('urls', urls);
+    urls[it.id] = {url:it.url, publicId:it.publicId, text:it.text}; store.set('urls', urls);
   }catch(e){
     it.err = e.message === 'Failed to fetch' ? 'Network error. Check connection and retry.' : e.message;
   }
@@ -386,7 +432,10 @@ function activateSource(id, label, records){
   $('#list').value = raw;
   $('#toolbarTitle').textContent = 'Items to record — ' + label;
   buildItems(); render();
-  $('#yamlStatus').textContent = records.length + ' items loaded from ' + label;
+  const notes = [];
+  if(duplicateCount) notes.push(duplicateCount + ' duplicate' + (duplicateCount === 1 ? '' : 's') + ' skipped');
+  if(reusedCount) notes.push(reusedCount + ' already recorded and reused');
+  $('#yamlStatus').textContent = items.length + ' items loaded from ' + label + (notes.length ? ' — ' + notes.join(', ') : '');
   $('#items').scrollIntoView({behavior:'smooth', block:'start'});
 }
 async function loadYaml(){
@@ -455,7 +504,12 @@ $('#applyList').addEventListener('click', () => {
   stopPlay(); raw = $('#list').value;
   sourceLists[sourceId] = raw; store.set('sourceLists', sourceLists);
   if(sourceId === 'custom') store.set('list', raw);
-  buildItems(); render(); toast('List updated');
+  buildItems(); render();
+  const notes = [];
+  if(duplicateCount) notes.push(duplicateCount + ' duplicate' + (duplicateCount === 1 ? '' : 's') + ' skipped');
+  if(reusedCount) notes.push(reusedCount + ' already recorded and reused');
+  $('#yamlStatus').textContent = notes.length ? notes.join(', ') : 'List updated';
+  toast('List updated');
 });
 
 $('#export').addEventListener('click', () => {
